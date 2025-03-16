@@ -1,4 +1,3 @@
-# Fajl sistemi
 
 - Bitan dio racunara jesu uredjaji koji trajno pohranjuju podatke. Potreban nam je uredjaj koji ce i kad nema napajanja, cuvat nase podatke u racunaru. Takvi uredjaji se zovu **diskovi**.
 - Kada kazemo memorija tada mislimo na RAM, trenutnu memoriju koja ne cuva podatke kada se izgubi napajanje ali koja je znacajno brza od diskova. Diskovi opet sa druge strane imaju mnogo veci kapacitet od RAMa ali je glavna mana to sto su mnogo spori u citanju i pisanju podataka.
@@ -130,4 +129,14 @@ struct dirent {
 >	- uvijek je tipa `T_DIR` i mora da sadrzi elemente `.` i `..` koji referenciraju `dinode` element pod opet rednim brojem `1`. Malo pojasnjenje. Kad kazem sadrzi elemente tada podrazumijevam sljedece. Prvi inode u nizu inodea je poseban. On u svom clanu `addrs` sadrzi adresu sektora u data sekciji na kojem se nalazi niz `dirent` struktura. U tom nizu se obavezno uvijek nalaze minimalno dva elementa tipa `dirent` i to oni sa `uname = '.'` i `uname = '..'`. Za ovaj prvi inode, `inum` je postavljeno na `1` dakle gledaju na sam inode koji je referencirao ovaj poseban direktorij.
 >	- dakle, ovo je jedini direktorij koji nije sadrzan u nekom drugom direktoriju.
 >	- zovemo ga `root` jer predstavlja vrh stabla fajl sistema. To stablo je formirano zahvaljujuci do sad opisanoj organizaciji sa inodeima i direntima.
+
+>[!info] Koliki fajlovi na xv6 mogu biti?
+>- Rekli smo da informacije o fajlu cuvamo u `dinode` strukturi koja modelira inode. Jedno od polja u `dinode` strukturi je `uint addrs[NDIRECT + 1]`. 
+>- To je niz od 13 `uint`-ova jer je `#define NDIRECT 12`. 
+>- Dakle, svaki inode sadrzi 13 pointera.
+>- Prvih dvanaest adresa iz niza `addrs` pokazuju na lokacije sektora u kojima je pohranjeno prvih 512 B fajla. 
+>- Kada bismo samo ovo imali na raspolaganju, fajl bi mogao biti velik maksimalno `7 * 512 B`.
+>- Zadnji element u nizu `addrs` cuva adresu sektora u data sekciji u kojoj se nalazi niz pointera na naredne data blokove datog fajla.
+>- Ako nam je sektor velik 512 B a svaki `uint` zauzima 4 B, znaci da u jednom sektoru mozemo imati 512/4 = 128 pointera.
+>- Tih 128 pointera dalje pokazuje na nekih 128 sektora po 512 B pa dolazimo do maksimalne velicine fajla od `12*512 + 128*512 = 71680 B = 70 kB`.
 
