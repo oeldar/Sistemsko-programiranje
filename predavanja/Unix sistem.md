@@ -83,7 +83,6 @@ gdje
 ## suid, sgid
 - ne kontam ni ovo
 
-
 # Fajl sistem dozvole
 - Svaki inode je u necijem vlasnistvu. Mora postojati korisnik i grupa kojem pripada odredjeni inode.
 - 
