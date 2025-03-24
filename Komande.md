@@ -56,7 +56,84 @@
 
 ---
 - `ln -s file slink` - kreira simbolicki link za vec postojeci fajl `file`
+
 >[!info] Simbolicki link
->Simbolicki link je poseban fajl koji je asociran sa novim inodeom. Taj inode samo pokazuje na ovaj prvobitni inode. Isto kao da smo napravili precicu do originalnog fajla. 
+>Simbolicki link je poseban fajl koji sluzi kao referenca na drugi fajl ili direktorij. On je dakle, novi inode, ciji sadrzaj nije sadrzaj fajla na kojeg je link iz data sekcije nego referenca na fajl na kojeg je on link. Simbolicki link mozemo prepoznati tako sto umjesto `-` ili `d` kod informacija o fajlu ima `l`.
+
+>[!info] Primjer
+>Recimo da u direktoriju `/home/eldar/proba` imamo fajl `foo.txt`. Naredbom `ls -s foo.txt slink` cemo kreirati novi fajl imena `slink` koji predstavlja soft link na fajl `foo.txt`.  Ako bismo sada rekli `ls -lhi` dobili bismo output
+>```sh
+>30034744 -rw-rw-r-- 1 eldar eldar    4 Mar 18 21:51 foo.txt
+30034745 lrwxrwxrwx 1 eldar eldar    7 Mar 18 21:51 slink -> foo.txt
+>```
+>Primijetimo da `slink` ima drugi broj inodea i da je tipa `l` dok je `foo.txt` tipa `-` tj. fajl je. Primijetimo da se i broj referenci na fajl `foo.txt` nije povecao kreiranjem soft linka na njega.
+>Sustina je da je sadrzaj fajla `foo.txt` neki niz znakova pohranjen u nekom sektoru data sekcije a gdje, govori polje `addrs` u `dinode` strukturi asociranoj sa fajlom `foo.txt`. 
+>Sadrzaj fajla `slink` nije sadrzaj fajla `foo.txt`.  Eh sta je sadrzaj fajla `slink` tj. na koje sektore pokazuje polje `addrs` od inodea asociranog sa fajlom `slink`?
+>
+>Pa sadrzaj fajla `slink` je **putanja** do fajla kojeg targetira taj `slink`. Zasto onda kada kazemo `cat slink` dobijamo ispis onoga sto pise u fajlu `foo.txt` a ne putanju `/home/eldar/proba/foo.txt`? Pa to je zato sto ako programu `cat` proslijedimo simbolicki link, on ce ispisati sadrzaj fajla kojeg taj link targetira. Ako me zanima na sta `slink` targetira, mogu to vidjet pomocu `ls -lhi` ili mogu pozvati `readlink slink` koji ce mi za output dati ime fajla na kojeg `slink` pokazuje.
+>
+>Kada bismo izbrisali fajl `foo.txt` sa `rm foo.txt` npr., nas fajl `slink` bi i dalje postojao. Njegov sadrzaj je `"foo.txt"` a taj fajl nam vise ne postoji. Tada soft link postane nevalidan. Ako bismo rekli `cat slink`, program `cat` bi procitao sadrzaj fajla `slink` a to je `"foo.txt"` i pokusao da `cat`-a taj fajl, medjutim on ne postoji pa dobijamo `cat: slink: No such file or directory` sto i ima smisla.
+
+# Permisije
+
+>[!info] Permisije
+>Kada kazemo `ls -lhi` dobijemo output poput:
+>```sh
+>30034744 -rw-rw-r-- 1 eldar eldar    2 Mar 20 13:08 foo.txt
+30034742 drwxrwxr-x 2 eldar eldar 4.0K Mar 17 22:47 subdir
+>```
+>Sta nam znaci ovo `-rw-rw-r--` i `drwxrwxr-x`?
+>- Prvi karakter se odnosi na tip fajla:
+>	- `-` - obicni fajl
+>	- `d` - direktorij
+>	- `l` - simbolicki link
+>	- `p` - pipe
+>	- `f` - fifo
+>	- `c` - karakter uredjaj
+>	- `b` -blok uredjaj
+>	- `s` - socket
+>- Slijedi niz od 9 karaktera formata `rwx rwx rwx`. To su permisije.
+>	- Prvi skup permisija se odnosi na vlasnika fajla. Tako ako je npr taj dio `rwx` vlasnik fajla onda ima permisiju da cita, pise i da izvrsava fajl. Ako se na mjestu bilo kojeg slova nalazi `-`, onda se ta permisija nema. Tako npr. `r-x` znaci da korisnik ima permisiju da cita i da izvrsava fajl ali nema permisiju da pise u njega.
+>	- Drugi skup permisija se odnosi na grupu koju pripada vlasnik fajla. To znaci da svi useri koji su u istoj grupi kao i vlasnik faja imaju te permisije.
+>	- Treci skup permisija se odnosi na sve ostale usere.
+>>[!abstract] Konkretno
+>>U nasem gornjem primjeru imali smo `-rw-rw-r--` sto prvo znaci da se radi o obicnom fajlu (`-`), zatim imamo `rw-`, `rw-` i `r--` sto znaci da vlasnik (`eldar`) ima pravo da cita i pise u fajl ali nema dozvolu da ga izvrsava. Isto tako i svi clanovi grupe `eldar` kojoj user `eldar` pripada. Svi ostali useri (oni koji ne pripadaju grupi `eldar` i nisu `eldar`), imaju dozvolu da samo citaju fajl.
+
+>[!info] Znacenje permisija za direktorij
+>Ako se radi o direktoriju `d`, tada permisije imaju sljedece znacenje
+>- `r` - omogucava korisniku da izlista sadrzaj direktorija sa `ls` npr.
+>- `w` - omogucava dodavanje i brisanje fajlova i direktorija unutar tog posmatranog direktorija
+>- `x` - omogucava ulazak u direktorij sa npr. `cd`. Primijetimo da ako imamo permisiju da udjemo u direktorij, to ne znaci da mozemo i da izlistamo njegov sadrzaj.
+
+>[!info] Permisije kao biti
+>Posmatrajmo neki niz permisija `rwxrwxrwx`. Ovo je u racunarima predstavljeno kao trocifren broj (4+2+1)(4+2+1)(4+2+1) gdje broj 4 predstavlja `r`, broj 2 `w` a broj `1` x permisiju pa bi tako vazile ekvivalencije
+>- `400` <=> `r-- --- ---`
+>- `777` <=> `rwx rwx rwx`
+>- `132` <=> `--x -wx -w-`
+>
+>Kad ja npr. kreiram fajl meni su default permisije `rw-rw-r--` sto znaci da su permisije postavljene na `664`. Za novokreirani direktorij je postavljeno na `775`.
+>Kazemo da je default permisija za fajl `666` a za direktorij `777`. Pa kako je onda kod nas `664` i `775`? Pa to je zato jer postoji nesto sto se zove `umask`. To je maska koja se oduzima od default permisija. Kad u terminalu kazemo `umask` dobit cemo cemu je jednaka ta maska. Kod nas ce biti npr. `002` sto znaci da od default permisije za fajl `666` oduzimamo `002` i dobijamo `664`. Analogno i za direktorije.
+
+- `umask` - ova komanda vraca koja je trenutna maska. 
+- `umask nova_maska` - ova komanda postavlja trenutnu masku na `nova_maska`
+
+>[!info] Promjena maske
+>Rekli smo da su default permisije za fajlove `666`. Ako isprintamo koja nam je trenutna maska sa `umask` komandom, dobit cemo `002`. To znaci da kad kreiramo novi fajl, on ce imati permisije `666 - 002 = 664` <=> `rw-rw-r--`.
+>Medjutim, mi ovu masku mozemo promijeniti. Ako komandom `umask 0222` promijenimo masku, sada ce nam novokreirani fajl imati permisije `666 - 222 = 444` <=> `r--r--r--`.
+>>[!abstract] Napomena
+>>Napomenimo da komandom `umask nova_maska` mijenjamo masku samo privremeno u trenutnoj sesiji shella. Ako to zelimo da uradimo trajno onda koristimo komandu `echo "umask nova_maska" > ~/.bashrc`
+
+Primijetimo da `umask` utice samo na permisije za fajlove koji ce tek biti kreirani. Ako imamo neki fajl sa vec postavljenim permisijama, onda njegove permisije ne mozemo mijenjati pomocu `umask`. Tu u igru dolazi `chmod` komanda.
+
+- `chmod trocifreni_broj ime_fajla` - postavlja fajlu `ime_fajla` permisije na `trocifreni_broj`. Npr. `chmod 227 foo.txt` bi fajlu `foo.txt` permisije postavilo na `277` odnosno `--xrwxrwx`.
+- `chmod (u/g/o/a)(+/-)(r/w/x) ime_fajla`:
+	- `chmod u+r foo.txt` - vlasniku dodaj `r` permisiju za fajl `foo.txt`
+	- `chmod g+w bar.txt` - grupi kojoj pripada vlasnik dodaj `w` permisiju za fajl `bar.txt`
+	- `chmod o-x a` - svim korisnicima koji nisu vlasnici ili ne pripadaju grupi kojoj pripada vlasnik, oduzmi `x` permisiju za fajl `a`
+	- `chmod a+rw foo` - svima dodaj `r` i `w` permisiju
+	- `chmod u+x,g-x,o+rwx foo`
+
+
+
 
 

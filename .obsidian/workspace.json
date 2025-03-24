@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Komande.md",
+                "file": "predavanja/Unix sistem.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Komande"
+              "title": "Unix sistem"
             }
           },
           {
@@ -92,7 +92,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "5ac94e14143c651c",
@@ -184,9 +185,9 @@
   },
   "active": "5db2b34fdcddd635",
   "lastOpenFiles": [
+    "Komande.md",
     "predavanja/Unix sistem.md",
     "predavanja/Fajl sistemi.md",
-    "Komande.md",
     "Vjezbe 1.md",
     "Pasted image 20250316154038.png",
     "predavanja",

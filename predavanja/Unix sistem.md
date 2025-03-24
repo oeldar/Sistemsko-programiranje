@@ -76,12 +76,10 @@ gdje
 >
 >Napomenimo jos jednom, da su ove kredencije vezane za proces. One postoje da bi se kontrolisalo kako trenutni proces kojeg je pokrenuo neki korisnik moze pristupati resursima tj. koje dozvole ima.
 
-## ruid, rgid
-- ovo je uid i gid korisnika koji je kreirao proces. Kad se proces kreira, on nasljedjuje ove identifikatore od svog roditelja.
-## euid, egid
-- ne kontam ovo
-## suid, sgid
-- ne kontam ni ovo
+- `euid` - efektivni user id. Ovo predstavlja efektivnog korisnika tj. ne nuzno ko je pokrenuo proces nego "dok se izvrsava proces, racunaj da imas ovaj user id koji je `euid`"
+	- npr. kad pokrenemo sljedeci proces `/usr/bin/passwd` kao korisnik eldar sa `id = 1000`, ocekivali bismo da nam se taj proces pokrene sa efektivnim user id od 1000. Medjutim, efektivni user id postaje 0 a sjetimo se da taj ud ima root user koji je superuser sa svim privilegijama.
+- `ruid` - id korisnika koji je pokrenuo proces. Ostaje konstantan tokom trajanja procesa.
+- `suid` - sacuvani user id. Ovo ne razumijem.
 
 # Fajl sistem dozvole
 - Svaki inode je u necijem vlasnistvu. Mora postojati korisnik i grupa kojem pripada odredjeni inode.
