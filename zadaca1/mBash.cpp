@@ -60,11 +60,12 @@ void mtouch(const std::string &path) {
     if (fd == -1) {
       perror("open");
       return;
-    } close(fd);
+    }
+    close(fd);
   }
 }
 
-void mcat(const std::string& path) {
+void mcat(const std::string &path) {
   if (path == "") {
     std::cout << "Command mcat requires argument" << std::endl;
     return;
@@ -82,10 +83,41 @@ void mcat(const std::string& path) {
   while ((bytesRead = read(fd, buffer, sizeof(buffer))) > 0) {
     write(STDOUT_FILENO, buffer, bytesRead);
   }
+  std::cout << std::endl;
 
   close(fd);
 }
 
-void mecho(const std::string& arg) {
-  std::cout << arg << std::endl;
+void mecho(const std::string &arg) {
+  std::string writeln, path;
+  bool redirection = false;
+  int i = 0;
+  while (arg[i] != '>') {
+    writeln.push_back(arg[i]);
+    ++i;
+  }
+  if (arg[i] == '>')
+    redirection = true;
+  ++i;
+  while (arg[i] == ' ')
+    ++i;
+  while (i != arg.size()) {
+    path.push_back(arg[i]);
+    ++i;
+  }
+
+  if (redirection) {
+    int fd = open(path.c_str(), O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    if (fd == -1) {
+      perror("create");
+      return;
+    }
+
+    write(fd, writeln.c_str(), writeln.size());
+
+    close(fd);
+    return;
+  }
+
+  write(STDOUT_FILENO, (arg + "\n").c_str(), arg.size() + 1);
 }

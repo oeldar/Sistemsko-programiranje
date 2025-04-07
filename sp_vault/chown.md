@@ -1,0 +1,3 @@
+- `chown` je obicni executable koji se nalazi u `usr/bin/chown`
+- On mijenja ownera.
+- `sudo chown avahi fajlIliDirektorij`

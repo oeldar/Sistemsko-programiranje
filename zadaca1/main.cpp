@@ -12,6 +12,7 @@ void mBashInfo() {
   std::cout << "  mcat   - Display file contents\n";
   std::cout << "  mtouch - Create an empty file\n";
   std::cout << "  mecho  - Print text to the console\n";
+  std::cout << "  exit   - Exits mBash\n";
   std::cout << "----------------------------------\n";
 }
 
@@ -30,8 +31,10 @@ int main(int argc, char *argv[]) {
     if (!argument.empty() && argument[0] == ' ') {
       argument = argument.substr(1);
     } // zbog viska razmaka
-    if (argument[0] == ' ' || argument[0] == '\t')
-      argument = "";
+    if (argument[0] == ' ' || argument[0] == '\t'){
+      std::cout << "Invalid argument." << std::endl;
+      continue;
+    };
 
     if (command == "mls") {
       if (argument == "") argument = ".";
