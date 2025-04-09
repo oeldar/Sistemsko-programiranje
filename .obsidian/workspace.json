@@ -4,109 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "ff155f7f084635b3",
+        "id": "1c60b1c160dd53ff",
         "type": "tabs",
         "children": [
           {
-            "id": "5db2b34fdcddd635",
+            "id": "032a34616a7973a6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "predavanja/Unix sistem.md",
+                "file": "sp_vault/FS api.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Unix sistem"
-            }
-          },
-          {
-            "id": "f9db610cef566b52",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Komande.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Komande"
-            }
-          },
-          {
-            "id": "53387a148f0cd3fc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "S bit.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "S bit"
-            }
-          },
-          {
-            "id": "8b388e2b50b9f248",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chown.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "chown"
-            }
-          },
-          {
-            "id": "fceaaa66a9fba6c4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Sticky bit.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Sticky bit"
-            }
-          },
-          {
-            "id": "bff6e48142537cbc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vjezbe 3.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Vjezbe 3"
-            }
-          },
-          {
-            "id": "778d456c3afeddf0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "predavanja/Fajl sistemi.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Fajl sistemi"
+              "title": "FS api"
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -163,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "5ac94e14143c651c",
@@ -253,8 +169,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "bff6e48142537cbc",
+  "active": "032a34616a7973a6",
   "lastOpenFiles": [
+    "proba/touch.c~",
+    "proba/touch.c",
+    "proba/stat.c~",
+    "proba/4913",
+    "eldar_osmanovic_zadaca1/zadaca1/main.cpp",
+    "eldar_osmanovic_zadaca1/zadaca1/mBash.hpp",
+    "eldar_osmanovic_zadaca1/zadaca1/mBash.cpp",
+    "eldar_osmanovic_zadaca1/zadaca1/Makefile",
+    "eldar_osmanovic_zadaca1/zadaca1",
+    "eldar_osmanovic_zadaca1",
+    "eldar_osmanovic_zadaca1.tar.xz",
+    "Untitled.md",
+    "sp_vault/FS api.md",
     "Sticky bit.md",
     "Vjezbe 3.md",
     "S bit.md",
@@ -266,7 +195,6 @@
     "predavanja/Fajl sistemi.md",
     "Vjezbe 1.md",
     "Pasted image 20250316154038.png",
-    "predavanja",
     "P3.md"
   ]
 }
