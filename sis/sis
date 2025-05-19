@@ -1,0 +1,8 @@
+#ifndef SIS_H
+#define SIS_H
+
+#define FOO 2
+
+void pozdrav();
+
+#endif

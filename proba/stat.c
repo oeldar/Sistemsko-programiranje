@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     if (stat(path, &statt) >= 0) {
       char* time = ctime(&statt.st_atim);
       printf("%s\t%s\t%s\n", S_ISREG(statt.st_mode) ? "-" : "d", entry->d_name, time);
+      statt.st_atim
 
     }
   }

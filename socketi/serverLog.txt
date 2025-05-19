@@ -1,0 +1,2 @@
+Client 127.0.0.1 connected.
+Trazeni resurs: .server.cClient 127.0.0.1 disconnected.

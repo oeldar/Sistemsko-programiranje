@@ -8,20 +8,63 @@
         "type": "tabs",
         "children": [
           {
-            "id": "032a34616a7973a6",
+            "id": "20f4fa82896c0f95",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "sp_vault/FS api.md",
+                "file": "Signali.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Signali"
+            }
+          },
+          {
+            "id": "f0c66141aad56033",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Sesije i grupe.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Sesije i grupe"
+            }
+          },
+          {
+            "id": "ff2a75deddf7f572",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Signali.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "FS api"
+              "title": "Signali"
+            }
+          },
+          {
+            "id": "b842555ad2bab0e8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IPC.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "IPC"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -78,8 +121,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "5ac94e14143c651c",
@@ -169,20 +211,25 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "032a34616a7973a6",
+  "active": "b842555ad2bab0e8",
   "lastOpenFiles": [
-    "proba/touch.c~",
-    "proba/touch.c",
-    "proba/stat.c~",
-    "proba/4913",
-    "eldar_osmanovic_zadaca1/zadaca1/main.cpp",
-    "eldar_osmanovic_zadaca1/zadaca1/mBash.hpp",
-    "eldar_osmanovic_zadaca1/zadaca1/mBash.cpp",
-    "eldar_osmanovic_zadaca1/zadaca1/Makefile",
-    "eldar_osmanovic_zadaca1/zadaca1",
-    "eldar_osmanovic_zadaca1",
-    "eldar_osmanovic_zadaca1.tar.xz",
-    "Untitled.md",
+    "proba/pipes/dups/bib.h~",
+    "proba/pipes/dups/bib.h",
+    "proba/pipes/dups/dup.cpp~",
+    "proba/pipes/dups/bar.txt",
+    "proba/pipes/dups/foo.txt",
+    "proba/pipes/dups/a.out",
+    "proba/pipes/dup.cpp~",
+    "proba/pipes/dup.cpp",
+    "proba/pipes/dups/Makefile",
+    "proba/pipes/dups/dup.cpp",
+    "proba/pipes/dups",
+    "Signali.md",
+    "Sesije i grupe.md",
+    "Uređaji.md",
+    "IPC.md",
+    "sp_vault/Komande.md",
+    "sp_vault/predavanja/Unix sistem.md",
     "sp_vault/FS api.md",
     "Sticky bit.md",
     "Vjezbe 3.md",
