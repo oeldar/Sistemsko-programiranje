@@ -42,7 +42,7 @@
               "type": "markdown",
               "state": {
                 "file": "Signali.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
@@ -64,7 +64,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -121,7 +121,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "5ac94e14143c651c",
@@ -211,8 +212,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b842555ad2bab0e8",
+  "active": "ff2a75deddf7f572",
   "lastOpenFiles": [
+    "IPC.md",
     "proba/pipes/dups/bib.h~",
     "proba/pipes/dups/bib.h",
     "proba/pipes/dups/dup.cpp~",
@@ -223,11 +225,9 @@
     "proba/pipes/dup.cpp",
     "proba/pipes/dups/Makefile",
     "proba/pipes/dups/dup.cpp",
-    "proba/pipes/dups",
     "Signali.md",
     "Sesije i grupe.md",
     "Uređaji.md",
-    "IPC.md",
     "sp_vault/Komande.md",
     "sp_vault/predavanja/Unix sistem.md",
     "sp_vault/FS api.md",
