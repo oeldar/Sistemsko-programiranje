@@ -153,3 +153,8 @@ void set_tty() {
 
 Kreirali smo novu `termios` strukturu i nazvali je `raw` jer terminal hocemo da prebacimo iz kanonicnog u raw mode. Sada cemo ovoj strukturi mijenjat polja tako da ih postavimo na zeljena. Prvo smo kopirali originalne postavke u `raw` a zatim izvrnemo flagove:
 	`raw.c_lflags &= ~(ECHO | ICANON | ISIG);` - ukidamo eho, kanonicni mod i procesiranje signala.
+
+
+**Kanonski mod**
+- Ako je flag `ICANON` setovan, to znaci da smo u kanonskom modu. U tom modu, aplikacija konzumira unos tek kada korisnik pritisne enter tj. primi karakter `\n`.
+- Ako je taj flag iskljucen, npr. koristeci `raw.c_lflags &= ~(ICANON)`, kanonski mod je iskljucen sto znaci da aplikacija nece cekati enter da konzumira unos nego ce taj unos konzumirati karakter po karakter. 

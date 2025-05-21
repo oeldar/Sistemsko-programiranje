@@ -164,3 +164,91 @@ int main() {
 	- Recimo da imamo proces A koji se forkira i dobije child proces B. Kada B bude stopiran ili terminiran, on ce svom parentu tj. A-u poslati signal `SIGCHLD`. Default akcija za ovaj signal je ignorisanje. Dakle, parent ce ignorisati ovaj signal kad ga dobije od svog childa. Sa flagom `SA_NOCLDSTOP` u procesu A omogucavamo da ako se A forkira, njegov child nece slati signal `SIGCHLD` procesu A ako bude stopiran sto bi inace radio ali ce ga slati kad se terminira.
 	- `SA_RESTART` - ne znam
 
+# `sigaction` struktura
+
+- Vidjeli smo da handler funkciju za neki signal u procesu mozemo instalirati koristeci sistemski poziv `signal(handler, sig_num)`. Ovo za posljedicu ima da se za signal sa brojem `sig_num`, default handler promijeni na `void handler(int)`.
+- Problem sa ovim je sljedeci:
+	- Kad se desi taj signal, izvrsi se handler koji smo custom napisali i nakon toga se handler za taj signal vraca nazad na defaultni.
+	- Ne blokiraju se novi signali koji su tipa signala koji se trenutno handla.
+- Ovaj problem je prevazidjen koristeci funkciju `sigaction`.
+- Procedura je sljedeca:
+
+1. Kreiramo strukturu `sigaction`
+
+```c
+struct sigaction sa;
+```
+
+2. U strukturi `sa` imamo dva polja pomocu kojih mozemo postaviti custom handler:
+	- `sa.sa_handler` - inicijaliziramo ga sa handlerom koji ima potpis `int handler(int signum)`
+	- `sa.sa_sigaction` - inicijaliziramo sa handlerom koji ima potpis `void alarm_handler(int sig, siginfo_t *info, void *ucontext)`. Ovaj handler sadrzi neke dodatne informacije u strukturi `siginfo_t` poput pida procesa koji je generisao signal.
+
+3. Ako cemo koristiti napredniji handler `sa.sa_sigaction`, tada moramo jos dodati i flag `SA_SIGINFO` koji omogucava koristenje naprednog handlera sa dodatnim parametrima
+
+```c
+sa.sa_flags = SA_SIGINFO;
+```
+
+4. Nakon sto smo dodali handler koji cemo koristiti, sada je potrebno reci za koji signal ce se koristiti taj handler i instalirati ga. To radimo, npr. za `SIGALRM`, koristeci
+
+```c
+sigaction(SIGALRM, &sa, NULL);
+```
+
+Od ovog trenutka, kada se desi signal `SIGALRM`, on ce se handlati koristeci fju kojom smo inicijalizirali `sa.sa_sigaction` polje.
+
+5. Istu ovu strukturu `sa` mozemo koristiti ako zelimo da postavimo isti handler i za neki drugi signal npr. `sigaction(SIGSEGV, &sa, NULL)`
+
+6. Ako hocemo sada da neki drugi signal handlame nekim drugim handlerom, to cemo uraditi tako sto napravimo novu strukturu i odradimo ovo sto smo rekli.
+
+7. Ako zelimo da dok traje izvrsavanje naseg custom handlera, blokiramo neki drugi signal, to mozemo uraditi pomocu polja `sa.sa_mask`.
+
+```c
+sigemptyset(&sa.sa_mask);
+sigaddset(&sa.sa_mask, SIGINT);         // blokiraj SIGINT tokom handlera
+sigaddset(&sa.sa_mask, SIGTERM);        // blokiraj i SIGTERM
+```
+
+>[!abstract] Primjer
+>Napisati custom handler za `SIGALRM` signal.
+>
+>```c
+>void mojHandler(int signum, siginfo_t* siginfo, void* ucontext) {
+>	printf("Pozdrav iz mog handlera.\n");
+>}
+>
+>int main(){
+>	struct sigaction sa;
+>	sa.sa_flags = SA_SIGINFO;
+>	sa.sa_sigaction = mojHandler;
+>	sigaction(SIGARLM, &sa, NULL);
+>}
+>```
+>Sta bismo trebali dodat ako bismo htjeli omoguciti da npr. signal `SIGINT` ne moze prekinuti izvrsavanje handlera `mojHandler`? Pa dodati samo sljedece dvije linije prije instalacije handlera:
+>-  `sigemptyset(&sa.sa_mask);`
+>- `sigaddset(&sa.sa_mask, SIGINT);`
+>Dakle, polje `sa.sa_mask` sadrzi skup signala koji ce biti blokirani dok traje izvrsavanje handlera.
+>---
+>Sada nevezano za to. Oke, to je nacin da postavimo neki svoj custom handler za neki signal. Nevezano za to, osim toga mozemo jos i blokirati neke druge signale, ne samo dok traje handler nego i u cijelom procesu. To radimo na sljedeci nacin:
+>```c
+>sigset_t myset;
+>sigemptyset(&myset);
+>sigaddset(&myset, SIGINT);
+>sigaddset(&myset, SIGTSTP);
+>sigprocmask(SIG_BLOCK, &myset, NULL);
+
+- Jos neki od flagova koje mozemo koristit u `sa.sa_flags` su npr.
+	- `SA_NOCLDSTOP` - po defaltu, parentu se salje `SIGCHLD` signal kad god njegovo dijete bude pauzirano ili terminirano. Ako pisemo handler za `SIGCHLD` signal i aktiviramo ovaj flag, tada parent nece primati `SIGCHLD` signal kada mu child proces bude stopiran nego samo kada bude terminiran.
+	- `SA_RESTART` - ako signal ciji handler pisemo stigne dok proces izvrsava neki sistemski poziv, postoji mogucnost da ce taj sistemski poziv biti prekinut i vratiti gresku. Ako aktiviramo ovaj flag, tada ce se sistemski poziv ponovo izvrsiti ako primi signal dok se on vec izvrsavao i time nam garantovat da ce izvrsit ono za sto je pokrenut.
+
+>[!abstract] Provjera da li je neki signal u pending stanju
+>Ako nas zanima da li ima signala u pending stanju to mozemo uraditi na sljedeci nacin:
+>1. Napravimo skup `sigset_t pendingSignals;`
+>2. Popunimo `pendingSignals` sa signalima koji su pending pozivajuci fju `sigpending(&pendingSignals);`
+>3. Da li je signal npr. `SIGALRM` ili generalno u bilo kojem skupu signala provjeravamo sa `sigismember(&pendingSignals, SIGALRM)` sto ce vratiti `1` ako jeste.
+
+>[!abstract] Dobijanje trenutne blocked maske
+>To radimo pomocu `sigprocmask(SIG_SETMASK, NULL, &blockedSignals);`
+
+
+
