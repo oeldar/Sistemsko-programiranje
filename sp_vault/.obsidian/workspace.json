@@ -1,24 +1,20 @@
 {
   "main": {
-    "id": "0a999af75c6bfc96",
+    "id": "0b0a36670daf6aeb",
     "type": "split",
     "children": [
       {
-        "id": "b928b87642d79bbc",
+        "id": "2742128d9183cdd8",
         "type": "tabs",
         "children": [
           {
-            "id": "2d8e67c2a73e9e60",
+            "id": "5d532ce6cb51f547",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Tretman iznimnih stanja.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Tretman iznimnih stanja"
+              "title": "New tab"
             }
           }
         ]
@@ -27,15 +23,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "d81221d406ffdad6",
+    "id": "9f7043983d408b25",
     "type": "split",
     "children": [
       {
-        "id": "1edc3803feea79b6",
+        "id": "acff479dde38eefc",
         "type": "tabs",
         "children": [
           {
-            "id": "91018b723e316ec7",
+            "id": "4a09669d3e658501",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +44,7 @@
             }
           },
           {
-            "id": "47638f0333d4d714",
+            "id": "a6611ad7fa2a2746",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +61,7 @@
             }
           },
           {
-            "id": "6f18257c6b252116",
+            "id": "0a7aaba89a132d93",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -78,24 +74,22 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
-    "id": "5ac94e14143c651c",
+    "id": "b78ae4a74ac744bd",
     "type": "split",
     "children": [
       {
-        "id": "5f0a02965f3250f0",
+        "id": "c599e94f2533c54f",
         "type": "tabs",
         "children": [
           {
-            "id": "d2825cd5ee59d12e",
+            "id": "d136691297c2de3f",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Vjezbe 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,25 +99,24 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Vjezbe 1"
+              "title": "Backlinks"
             }
           },
           {
-            "id": "7afbde10766dfd8f",
+            "id": "ae843edbb25d3989",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Vjezbe 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Vjezbe 1"
+              "title": "Outgoing links"
             }
           },
           {
-            "id": "5a5902e5e494dfde",
+            "id": "756fde0f07b08382",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -138,18 +131,17 @@
             }
           },
           {
-            "id": "ba0f9e60ac0c8eb3",
+            "id": "3064616b6d54a864",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "Vjezbe 1.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Vjezbe 1"
+              "title": "Outline"
             }
           }
         ]
@@ -169,37 +161,6 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2d8e67c2a73e9e60",
-  "lastOpenFiles": [
-    "Tretman iznimnih stanja.md",
-    "Uređaji.md",
-    "Sesije i grupe.md",
-    "Signali.md",
-    "IPC.md",
-    "proba/pipes/dups/bib.h~",
-    "proba/pipes/dups/bib.h",
-    "proba/pipes/dups/dup.cpp~",
-    "proba/pipes/dups/bar.txt",
-    "proba/pipes/dups/foo.txt",
-    "proba/pipes/dups/a.out",
-    "proba/pipes/dup.cpp~",
-    "proba/pipes/dup.cpp",
-    "proba/pipes/dups/Makefile",
-    "proba/pipes/dups/dup.cpp",
-    "sp_vault/Komande.md",
-    "sp_vault/predavanja/Unix sistem.md",
-    "sp_vault/FS api.md",
-    "Sticky bit.md",
-    "Vjezbe 3.md",
-    "S bit.md",
-    "chown.md",
-    "predavanja/Unix sistem.md",
-    "Komande.md",
-    "2025-03-25.md",
-    "Bash i environment varijable.md",
-    "predavanja/Fajl sistemi.md",
-    "Vjezbe 1.md",
-    "Pasted image 20250316154038.png",
-    "P3.md"
-  ]
+  "active": "5d532ce6cb51f547",
+  "lastOpenFiles": []
 }
