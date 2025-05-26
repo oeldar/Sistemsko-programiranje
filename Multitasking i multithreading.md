@@ -177,3 +177,5 @@ Nit: 321 i: 0
 ```
 
 - Dakle, koristeci `join` omogucavamo da jedna nit saceka da druga nit zavrsi sa svojim poslom.
+- Ako pozovemo `detach` umjesto `join` na objektu tipa `std::thread`, taj objekat ce takodjer biti u unjoinable stanju sto znaci da sigurno mozemo napustiti opseg u kojem je objekat tipa `std::thread` bez da se program terminira. Nit ce se dati na upravljanje C++ runtimeu. Dakle, nit koju smo detachali ce se nastaviti izvrsavati samo ce objekat asociran s tom niti biti u unjoinable stanju i mi toj niti necemo moci pristupiti. Mi nikada u nasem kodu vise necemo onda moci znaci da li je ta nit zavrsila s radom ili nije ali slobodno mozemo napustiti trenutni opseg.
+- 

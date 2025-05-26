@@ -49,8 +49,7 @@
               "title": "Multitasking i multithreading"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -198,11 +197,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "bba94ac34f510926",
+  "active": "2d8e67c2a73e9e60",
   "lastOpenFiles": [
+    "Multitasking i multithreading.md",
     "Tretman iznimnih stanja.md",
     "RAII.md",
-    "Multitasking i multithreading.md",
     "Uređaji.md",
     "Sesije i grupe.md",
     "Signali.md",

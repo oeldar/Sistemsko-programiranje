@@ -8,7 +8,7 @@
 - Funkcija koja za odredjeni input ne moze da da validan output se zove nepotpuna funkcija.
 - Idealno bi bilo da svaka funkcija bude potpuna, medjutim to nije slucaj.
 - Stanje u kojem funkcija ne moze da vrati rezultat za dati ulaz se zove abnormalna situacija.
-- U POSIX domenu, metodologija kojom se ovo handla jesu error kodovi. Ideja je da ako se desi abnormalna situacija u funkciji, takva funkcija ce vratiti odredjenu vrijednost koja ce calleru dati do znanja da je doslo do abnormalne situacije i da izvrsavanje te funkcije smatra ne uspjesnim.
+- U POSIX domenu, metodologija kojom se ovo handla jesu error kodovi. Ideja je da ako se desi abnormalna situacija u funkciji, takva funkcija ce vratiti odredjenu vrijednost koja ce calleru dati do znanja da je doslo do abnormalne situacije i da izvrsavanje te funkcije smatra neuspjesnim.
 - Npr. ako funkcija `tcsetattr(ttyfd, &origTermios)` vrati `-1`, tada znamo da postavljanje postavki terminala asociranog sa fajl deskriptorom `ttyfd` na postavke zapisane u strukturi `origTermios` nije bilo uspjesno.
 - Ovo je u C-u jedini nacin da detektujemo abnormalnu situaciju.
 - Program da bi ispravno radio, on mora da radi za 100 % slucajeva, tako da treba da pokrijemo sve moguce situacije. Kazemo da treba da *tretiramo iznimna stanja*.
