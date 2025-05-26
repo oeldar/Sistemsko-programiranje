@@ -39,4 +39,48 @@
 - Sintaksom `catch(const tip& ime) { blok;}` hvatamo iznimku tipa `tip`. To znaci da ako je negdje receno `throw obj;` i `obj` je tipa `tip`, ovaj `catch` blok ce tretirati bacenu iznimku.
 - Sintaksom `catch(...)` hvatamo iznimku bilo kojeg tipa. U bloku takvog catcha mozemo tretirati sve iznimke koje se mogu desiti u nasem kodu. Ove tri tacke se zovu **elipsa**.
 - Ako se prilikom tretiranja iznimke, dakle u bloku catch-a, kaze samo `throw;` bez argumenata, tada se s tog mjesta baca iznimka istog tipa kao i ona koja je dovela do tog catch bloka.
-- 
+
+---
+- Dio koda u kojem ocekujemo da ce se desiti iznimka stavljamo unutar `try { }` bloka. Nakon tog bloka stavljamo `catch(){ }` blok u kojem tretiramo eventualno bacenu iznimku u `try` bloku. Ako nemamo `try` a desi se iznimka u kodu, tada iznimka nije tretirana i vec smo rekli da ce program biti terminiran.
+
+---
+- Svaka funkcija, metod ukljucujuci i konstruktore, moze baciti iznimku osim jedne stvari a to je destruktor.
+- Destruktor ne smije imati mogucnost da baci iznimku jer onda ne bismo imali onu garanciju u vezi stack unwindeing-a o kojoj smo pricali.
+- Zanimljivo je da cak i konstruktor moze baciti iznimku. To se moze desiti npr. u sljedecoj situaciji. Recimo da konstruktor prima neki argument koji mu je potreban da konstruise objekat. Ako je proslijedjeni argument u stanju u kojem bi konstruktor proizveo nevalidan objekat, tada se recimo moze baciti iznimka.
+- Znamo da je objekat u C++ upotpunosti konstruisan kad se obave tri stvari:
+	1. Kad se alocira memorija za taj objekat
+	2. Kad se inicijaliziraju clanovi u tom objektu
+	3. Kad se izvrsi cijeli kod konstruktor metoda bez da se baci iznimka
+
+---
+- Stanje svakog programa je odredjeno stanjem objekata na heapu, stacku, stanjem globalnih objekata kao i stanjem registara.
+- Kada se desi iznimka u kodu, program se nasao u abnormalnom stanju.
+- Cilj tretiranja iznimke je da program ponovo dovede u normalno, jasno definisano stanje ako je to moguce ili ako nije, da ga terminira. A to ce najbolje uraditi bude li se tacno znalo kakva je iznimka bacena. To je stanje u kojem dodjemo kada dodjemo do `catch` bloka. 
+- A da bismo mi znali rijesiti to abnormalno stanje, mi moramo jasno da znamo u kojem stanju smo program dobili kad smo dosli do `catch`-a. Dakle, kod koji prethodi iznimci, tj. kod koji se nalazi prije bacanja iznimke i kroz koji ce se proci tokom stack unwideinga, mora biti takav da nakon njegovog izvrsavanja jasno znamo u kojem stanju je nas program kad se dodje do tretiranja bacene iznimke u `catch` bloku.
+
+---
+# Exception safety
+
+>[!example] Primjer
+>Recimo da imamo `std::vector<int> vec = {1, 3, 2};`. Recimo da kazemo `try { vec.push_back(3)} catch(...) {};`. Metod `push_back` treba da alocira prostor za 4 elementa na heapu, prekopira `1, 3, 2` u taj novi prostor i da doda broj `3`. Zatim treba da prekine vezu sa starim nizom na heapu i da uspostavi vezu sa novim. Ovaj metod ce u pozadini vjerovatno pozvat niz drugih metoda da to uradi. Neki od tih metoda koji on pozove moze baciti iznimku. Mi ne znamo u kojem trenutku tj. pri kojoj operaciji se iznimka moze desiti. Kada se nama vrati objekat `vec` unutar `catch`-a, mi nemamo nikakvu garanciju kojem je stanju objekat `vec`, tj. da li se iznimka desila pri kopiranju elemenata, pri rezervaciji novog prostora na heapu ili pak negdje drugo. A cilj nam je da program dovedemo u neko jasno definisano stanje. Ovakvo stanje je sve samo ne definisano.
+
+- Eh, da bi prelazak u novo stanje bio siguran (a u to stanje prelazimo u catch bloku nakon sto nam se desila iznimka), nas kod mora da ima neke garancije. Ovakvu sigurnost zovemo *exception safety*.
+- Postoji nesto sto se zove jaka garancija ili *strong garanty*. Ovo je nesto slicno transakciji u bazama podataka gdje imamo sljedecu situaciju. Recimo da nesto treba da uradimo sa nekih podataka i da se ta akcija sastoji iz vise operacija. Taj niz operacija grupisemo u jednu transakciju. Ako se u bilo kojoj od operacija desi nesto nedefinisano, tada kazemo da je cijela transakcija nevalidna i podatke vracamo u stanje u kojem su bili prije izvrsavanja transakcije.
+- Jaka garancija u kontekstu exception safety-a nam obezbjedjuje da je operacija koja eventualno proizvede iznimku reverzibilna bez ikakvih popratnih efekata. Ako pozovemo neku funkciju koja moze da baci iznimku, ako ne dodje do iznimke, ta funkcija ce validno uraditi ono sto i treba da uradi bez ikakvih problema. Medjutim, ako dodje do iznimke i kod je napisan tako da garantuje da ce u catch bloku u kojem se tretira iznimka, stanje programa biti jednako stanju u kojem je program bio prije izvrsavanja koda u kojem se desila iznimka, tada kazemo da imamo jaku garanciju.
+- Dakle, ako nam neko kaze da je napisao metod `f1()` i da ima jaku garanciju spram exception safety-a to znaci sljedece: Ako se metod `f1` izvrsi kako treba, on ce uraditi ono sto i treba da radi i sve je super. Ako metod `f1` baci iznimku, tada imamo garanciju da ce program u `catch` bloku u kojem se tretira ta iznimka biti u onom stanju u kojem je bio prije nego je metod `f1` pozvan. Taj metod nam garantuje da ce sve promjene stanja programa reverzirat i vratiti ga u stanje u kojem je bio ako je doslo do iznimke.
+- Mali broj operacija iz standardne biblioteke ima jaku garanciju. Jedan metod koji ima jaku garanciju je `push_back` tako da onaj primjer od maloprije sa `push_back`-om je bio samo ilustrativan a ne realan. Mi imamo garanciju da ako pozovemo `push_back` nad nekim vektorom i unutar njega se iz bilo kojeg razloga baci iznimka, ako je tretiramo, stanje vektora nad kojem smo pozvali ovaj `push_back` ce biti jednako stanju u kojem je taj vektor bio prije pozivanja tog `push_back`-a.
+- Najpozeljniji i najbolji kod je onaj koji daje strong garanty.
+- Ovo je jako tesko postici. Npr. recimo da smo napisali neki metod koji posalje paket na mrezu pa onda u narednom dijelu koda generise iznimku. On ne moze ici i ganjati paket na internetu da stanje vrati u ono u koje je bilo. To je nemoguce.
+- Drugi nivo garancije je osnovna garancija tj. *basic garanty*. To je kada operacija koja eventualno baci iznimku, prouzrokuje poznate ireverzibilne popratne efekte ali obavezno oslobodi sve dinamicki zauzete resurse. Vecina metoda standardne biblioteke ima ovaj basic nivo garancije. To je minimum kojem trebamo teziti kada pisemo kod.
+- Najbolja garancija je no-throw garancija i to je garancija da nas kod nece baciti iznimku. Funkcije i metode koji imaju no-throw garanciju potpisujemo kao `void foo() noexcept;`
+- Ovu garanciju imaju svi destruktori.
+- Ako metod oznacen kao `noexcept` ipak pozove `throw`, runtime ce pozvati `std::terminate` i bezuslovno terminirati program.
+- Najgora garancija je nikakva garancija tj. *no garanty*. To se desava kod operacija koje u slucaju proizvedene iznimke ne pruzaju nikakvu garanciju o stanju programa tj. program je u nedefinisanom stanju. U `catch`-u, kada tretiramo takvu iznimku, jedino sta mozemo jeste da terminiramo program. Nema sanse da ga ponovo dovedemo u definisano stanje sto je i cilj catcha.
+
+>[!abstract] Exception safety
+>Sa stanovista exception safety-a, nas kod moze imati sljedece nivoe garancije:
+>1. **Jaka garancija** - program se nalazi u jasno definisanom stanju A. Eventualno se desi iznimka. U catch bloku u kojem se tretira bacena iznimka garantovano nam je da ce stanje programa biti u stanju A tj. u stanju u kojem je bilo prije pozivanja metododa koji je bacio tu iznimku.
+>2. **Osnovna garancija** - Ako neki metod ima osnovnu garanciju, i on pri svom izvrsavanju zauzme neki dinamicki resurs, i zatim se desi iznimka, mi tada imamo garanciju da ce svi dinamicki resursi biti oslobodjeni.
+>3. **No-throw garancija** - metod koji sigurno nece baciti iznimku `void foo() noexcept;`. Ovakvi su svi destruktori.
+>4. **Nema garancije** - Ako se desi iznimka, nemamo nikakvu garanciju u kojem stanju ce program biti i.e. program ce biti u nedefinisanom stanju - ne znamo sta je na heapu, stacku itd.
+
