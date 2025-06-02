@@ -1,0 +1,7 @@
+---------------------------
+STDIN_FILENO = 0 -> /dev/pts/4
+STDOUT_FILENO = 1 -> /home/eldar/sp_ucenje/dup/fajl1.txt
+STDERR_FILENO = 2 -> /dev/pts/4
+fd1 = 3 -> /home/eldar/sp_ucenje/dup/fajl1.txt
+fd2 = 4 -> /home/eldar/sp_ucenje/dup/fajl1.txt
+hej sta ima kako si

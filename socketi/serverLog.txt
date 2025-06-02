@@ -1,2 +1,7 @@
 Client 127.0.0.1 connected.
-Trazeni resurs: .server.cClient 127.0.0.1 disconnected.
+Trazeni resurs: ./drugiSaljem direktorij.
+a.out
+main.c
+..
+.
+Client 127.0.0.1 disconnected.
