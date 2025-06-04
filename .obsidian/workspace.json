@@ -4,35 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "b9878ae269cad650",
+        "id": "f112138f8150b253",
         "type": "tabs",
         "children": [
           {
-            "id": "1a666d5537e1bace",
+            "id": "a023a01bd9711f16",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Pitanja za AIE.md",
+                "file": "2. Unix sistemi.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Pitanja za AIE"
+              "title": "2. Unix sistemi"
             }
           },
           {
-            "id": "b475bc46adea750e",
+            "id": "748a5f3aa205d1a6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "RAII.md",
-                "mode": "source",
+                "file": "sp_vault/Sticky bit.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "RAII"
+              "title": "Sticky bit"
             }
           }
         ],
@@ -93,8 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "5ac94e14143c651c",
@@ -184,25 +183,30 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b475bc46adea750e",
+  "active": "748a5f3aa205d1a6",
   "lastOpenFiles": [
-    "1. Fajl sistemi.md",
+    "sp_vault/S bit.md",
+    "sp_vault/Komande.md",
     "2. Unix sistemi.md",
+    "Tretman iznimnih stanja.md",
+    "sp_vault/FS api.md",
+    "sp_vault/chown.md",
+    "sp_vault/Bash i environment varijable.md",
+    "1. Fajl sistemi.md",
+    "Atomic i future.md",
+    "Multitasking i multithreading.md",
+    "Pasted image 20250603230754.png",
+    "Pasted image 20250603230650.png",
+    "Pasted image 20250603224644.png",
+    "Pasted image 20250603224555.png",
+    "RAII.md",
     "Pitanja za AIE.md",
     "sp_vault/predavanja/Unix sistem.md",
     "sp_vault/predavanja/Fajl sistemi.md",
-    "sp_vault/FS api.md",
-    "Multitasking i multithreading.md",
-    "sp_vault/S bit.md",
-    "sp_vault/Komande.md",
-    "sp_vault/chown.md",
-    "sp_vault/Bash i environment varijable.md",
     "IPC.md",
     "Sesije i grupe.md",
     "Signali.md",
-    "Tretman iznimnih stanja.md",
     "Uređaji.md",
-    "RAII.md",
     "proba/threads.cpp~",
     "proba/threads.cpp",
     "proba/pipes/dups/bib.h~",
@@ -221,7 +225,6 @@
     "Komande.md",
     "2025-03-25.md",
     "Bash i environment varijable.md",
-    "predavanja/Fajl sistemi.md",
     "Pasted image 20250316154038.png"
   ]
 }

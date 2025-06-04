@@ -177,5 +177,34 @@ Nit: 321 i: 0
 ```
 
 - Dakle, koristeci `join` omogucavamo da jedna nit saceka da druga nit zavrsi sa svojim poslom.
-- Ako pozovemo `detach` umjesto `join` na objektu tipa `std::thread`, taj objekat ce takodjer biti u unjoinable stanju sto znaci da sigurno mozemo napustiti opseg u kojem je objekat tipa `std::thread` bez da se program terminira. Nit ce se dati na upravljanje C++ runtimeu. Dakle, nit koju smo detachali ce se nastaviti izvrsavati samo ce objekat asociran s tom niti biti u unjoinable stanju i mi toj niti necemo moci pristupiti. Mi nikada u nasem kodu vise necemo onda moci znaci da li je ta nit zavrsila s radom ili nije ali slobodno mozemo napustiti trenutni opseg.
+- Ako pozovemo `detach` umjesto `join` na objektu tipa `std::thread`, taj objekat ce takodjer biti u unjoinable stanju sto znaci da sigurno mozemo napustiti opseg u kojem je objekat tipa `std::thread` bez da se program terminira. Nit ce se dati na upravljanje C++ runtimeu. Dakle, nit koju smo detachali ce se nastaviti izvrsavati samo ce objekat asociran s tom niti biti u unjoinable stanju i mi toj niti necemo moci pristupiti. Mi nikada u nasem kodu vise necemo onda moci znaci da li je ta nit zavrsila s radom ili nije ali slobodno mozemo napustiti trenutni opseg. Ovo je korisno za fire and forget situacije gdje zelimo nesto da uradimo, da ispalimo i onda da skroz zaboravimo za to.
+- Npr pogledaj sljedeci primjer: Pozvao si `detach` i predao si handlanje niti `t1` C++ runtimeu. Nemas garanciju da li ce se to izvrsiti dok traje tvoj program.
+
+![[Pasted image 20250603224555.png]]
+- Dok ovdje imas tu garanciju:
+
+![[Pasted image 20250603224644.png]]
+
+---
+
+- Argumenti koje primaju funkcije kojima cemo zaposliti thread mogu biti bilo kojeg tipa koji se moze kopirati, znaci `int, std::string` itd.
+- Medjutim, ako zelimo nit zaposliti funkcijom ciji je potpis `void foo(int&)`, to je oke. Ali ne bismo onda mogli nit kreirati na sljedeci nacin:
+
+```cpp
+int a = 4;
+std::thread t{foo(&a)};
+```
+
+- Ovo C++ zabranjuje. Ako stvarno hocemo da posaljemo referencu onda to moramo uraditi na sljedeci nacin:
+
+```cpp
+int a = 4;
+std::thread t{[&a](int b){ a += b;}, 10};
+
+// ili
+int a = 4;
+std::thread t{std::ref(a)};
+```
+
+![[Pasted image 20250603230754.png]]
 - 
