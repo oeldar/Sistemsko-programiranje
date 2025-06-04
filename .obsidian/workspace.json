@@ -34,9 +34,37 @@
               "icon": "lucide-file",
               "title": "Sticky bit"
             }
+          },
+          {
+            "id": "b6ed34411a0bbce7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "RAII - prakticno.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "RAII - prakticno"
+            }
+          },
+          {
+            "id": "9c49b02ddc40080e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Threadovi - prakticno.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Threadovi - prakticno"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -93,7 +121,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "5ac94e14143c651c",
@@ -183,8 +212,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "748a5f3aa205d1a6",
+  "active": "9c49b02ddc40080e",
   "lastOpenFiles": [
+    "Threadovi - prakticno.md",
+    "RAII - prakticno.md",
+    "Pasted image 20250604203646.png",
+    "Pasted image 20250604203307.png",
+    "Pasted image 20250604201812.png",
+    "Pasted image 20250604201007.png",
+    "Pasted image 20250604194605.png",
+    "Pasted image 20250604194243.png",
+    "Pasted image 20250604194200.png",
+    "Pasted image 20250604194134.png",
+    "sp_vault/Sticky bit.md",
     "sp_vault/S bit.md",
     "sp_vault/Komande.md",
     "2. Unix sistemi.md",
@@ -197,8 +237,6 @@
     "Multitasking i multithreading.md",
     "Pasted image 20250603230754.png",
     "Pasted image 20250603230650.png",
-    "Pasted image 20250603224644.png",
-    "Pasted image 20250603224555.png",
     "RAII.md",
     "Pitanja za AIE.md",
     "sp_vault/predavanja/Unix sistem.md",
@@ -221,10 +259,6 @@
     "Vjezbe 3.md",
     "S bit.md",
     "chown.md",
-    "predavanja/Unix sistem.md",
-    "Komande.md",
-    "2025-03-25.md",
-    "Bash i environment varijable.md",
-    "Pasted image 20250316154038.png"
+    "predavanja/Unix sistem.md"
   ]
 }
